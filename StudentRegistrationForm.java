@@ -5,7 +5,6 @@ import java.util.Arrays;
 import javax.swing.*;
 
 public class StudentRegistrationForm {
-
     public static void main(String[] args) {
         new RegistrationForm();
     }
@@ -18,7 +17,7 @@ class RegistrationForm {
 
     public RegistrationForm() {
         JFrame frame = new JFrame("Student Registration Form");
-        frame.setSize(500, 500);
+        frame.setSize(700, 700);
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -72,9 +71,14 @@ class RegistrationForm {
         submitButton.setBounds(160, 260, 100, 30);
         frame.add(submitButton);
 
+        JButton clearButton = new JButton("Clear");
+        clearButton.setBounds(270, 260, 100, 30);
+        frame.add(clearButton);
+
         resultLabel = new JLabel();
-        resultLabel.setBounds(30, 310, 440, 130);
+        resultLabel.setBounds(30, 310, 600, 300); // Increased height
         resultLabel.setVerticalAlignment(JLabel.TOP);
+        resultLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         frame.add(resultLabel);
 
         submitButton.addActionListener(e -> {
@@ -94,7 +98,7 @@ class RegistrationForm {
                 int total = maths + eng + sci;
                 double average = total / 3.0;
                 int highest = Arrays.stream(marks).max().getAsInt();
-                int lowest = Arrays.stream(marks).min().getAsInt();
+                int lowest = Arrays.stream(marks).min().getAsInt(); // ✅ Calculate lowest
 
                 resultLabel.setText("<html><b>Registered:</b> " + name + " (Roll No: " + roll + ")<br>"
                         + "Maths: " + maths + "<br>"
@@ -103,11 +107,20 @@ class RegistrationForm {
                         + "<b>Total Marks:</b> " + total + "<br>"
                         + "<b>Average Marks:</b> " + String.format("%.2f", average) + "<br>"
                         + "<b>Highest Marks:</b> " + highest + "<br>"
-                        + "<b>Lowest Marks:</b> " + lowest + "</html>");
+                        + "<b>Lowest Marks:</b> " + lowest + "<br></html>"); // ✅ Ensure shown
 
             } catch (NumberFormatException ex) {
                 resultLabel.setText("Please enter valid numbers for marks.");
             }
+        });
+
+        clearButton.addActionListener(e -> {
+            nameField.setText("");
+            rollField.setText("");
+            mathsField.setText("");
+            engField.setText("");
+            sciField.setText("");
+            resultLabel.setText("");
         });
 
         frame.setVisible(true);
